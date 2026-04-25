@@ -35,7 +35,15 @@
 
             <p>
                 Role: <?php echo $character['ROLE']; ?> <br>
-                Difficulty: <?php echo $character['DIFFICULTY']; ?>
+                Difficulty: <?php echo $character['DIFFICULTY']; ?> <br>
+                Win rate: <?php 
+                $query = "SELECT (SELECT count(*) FROM MATCH_STATS WHERE CHARACTER_ID = (SELECT CHARACTER_ID FROM CHARACTERS WHERE NAME = ?) AND WIN_LOSS = 'Win')/(SELECT count(*) FROM MATCH_STATS WHERE CHARACTER_ID = (SELECT CHARACTER_ID FROM CHARACTERS WHERE NAME = ?)) AS 'character win rate'";
+                $stmt = $conn->prepare($query);
+                $stmt->bind_param("ss", $character['NAME'], $character['NAME']);
+                $stmt->execute();
+                $win_rate_result = $stmt->get_result()->fetch_assoc();
+                echo $win_rate_result['character win rate'];
+                ?>
             </p>
         <?php endif; ?>
 

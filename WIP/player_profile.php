@@ -51,6 +51,14 @@
                 Level: <?php echo $player['LEVEL']; ?> <br>
                 Server: <?php echo $player['SERVER']; ?> <br>
                 Account Created: <?php echo $player['CREATE_TIME'] ?> <br>
+                Win loss: <?php 
+                 $query = "SELECT (SELECT count(*) FROM  MATCH_STATS WHERE PLAYER_ID= (SELECT PLAYER_ID FROM PLAYERS WHERE USERNAME = ?) AND WIN_LOSS = 'Win')/(SELECT count(*) FROM MATCH_STATS  WHERE PLAYER_ID = (SELECT PLAYER_ID FROM PLAYERS WHERE USERNAME = ?) ) AS 'win loss';";
+                 $stmt = $conn->prepare($query);
+                 $stmt->bind_param("ss", $username, $username);
+                 $stmt->execute();
+                 $win_loss_result = $stmt->get_result()->fetch_assoc();
+                    echo $win_loss_result['win loss'];
+                ?>
             </p>
 
             <h2>Match History</h2>
