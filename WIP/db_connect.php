@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION['admin_logged_in'])) {
+    # initalize to false
+    $_SESSION['admin_logged_in'] = false;
+}
 mysqli_report(MYSQLI_REPORT_OFF);
 $conn = new mysqli('127.0.0.1', 'test', 'test', 'testdb', 3307);
 if ($conn->connect_error) {

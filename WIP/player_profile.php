@@ -73,7 +73,7 @@ $conn->close();
     <ul class="nav-links">
         <li><a href="index.php">Home</a></li>
         <li><a href="leaderboard.php">Leaderboard</a></li>
-        <li><a href="admin.php">Admin</a></li>
+        <li><a href="login_admin.php">Admin</a></li>
     </ul>
 </nav>
 <main>
