@@ -13,6 +13,9 @@ services:
       MARIADB_DATABASE: testdb
     ports:
       - 3307:3306
+    volumes:
+      - ./WIP/define.sql:/docker-entrypoint-initdb.d/01_define.sql
+      - ./WIP/seed.sql:/docker-entrypoint-initdb.d/02_seed.sql
   adminer:
     image: adminer
     restart: always

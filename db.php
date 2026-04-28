@@ -2,8 +2,12 @@
 
 // Connect to MySQL server, select database
         $conn = new mysqli('localhost:3307', 'test', 'test', 'testdb');
-        if ($conn ->connect_error)
-               die('Could not connect: ' . $conn->connect_error);
+        if ($conn->connect_error) {
+                $conn = new mysqli('localhost', 'root', '', 'testdb');
+        }
+        if ($conn->connect_error) {
+                die('Could not connect: ' . $conn->connect_error);
+        }
         echo 'sucess';
 
 // Send SQL query
