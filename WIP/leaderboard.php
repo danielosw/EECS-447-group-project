@@ -30,7 +30,7 @@ $stmt = $conn->prepare(
     JOIN MATCHES M ON MS.match_id = M.match_id
     WHERE game_mode = 'Ranked'
     $region_filter
-    GROUP BY P.player_id ORDER BY $order
+    GROUP BY P.player_id HAVING COUNT(*) > 3 ORDER BY $order
 ");
 if (!empty($params)) {
     $stmt->bind_param($types, ...$params);
