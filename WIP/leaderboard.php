@@ -5,7 +5,7 @@ $rank = 1;
 $sort = $_GET['sort'] ?? 'winrate';
 $region = $_GET['region'] ?? 'all';
 $order = match($sort) {
-    'level' => 'P.level DESC',
+    'level' => 'level DESC',
     'winrate' => 'winrate DESC',
     default => 'winrate DESC'
 };
@@ -44,7 +44,7 @@ $players = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars("Leaderboard") ?> - Ranked</title>
+    <title>Leaderboard - Ranked Players</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -80,7 +80,10 @@ $players = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     </form>
 
     <div class="card">
-        <div class="card-title">Ranked Players</div>
+        <div class="card-title">Ranked Matches</div>
+        <?php if (!$players): ?>
+            <div class="empty-state" style="padding:2rem">No players found.</div>
+        <?php else: ?>
         <div class="table-wrap">
             <table>
                 <thead>
@@ -89,9 +92,6 @@ $players = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (!$players): ?>
-                        <tr><td colspan="5" style="text-align:center">No players found.</td></tr>
-                    <?php endif; ?>
                     <?php foreach ($players as $p): ?>
                         <tr>
                             <td><?= $rank ?><?php $rank++; ?></td>
@@ -113,6 +113,7 @@ $players = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                 </tbody>
             </table>
         </div>
+        <?php endif; ?>
     </div>
 
 </main>
