@@ -20,7 +20,7 @@ if (!$_SESSION['admin_logged_in']) {
     <ul class="nav-links">
         <li><a href="index.php">Home</a></li>
         <li><a href="leaderboard.php">Leaderboard</a></li>
-        <li><a href="admin_login.php">Admin</a></li>
+        <li><a href="admin_login.php" class="active">Admin</a></li>
     </ul>
 </nav>
 <main>
