@@ -24,7 +24,6 @@ if (!$_SESSION['admin_logged_in']) {
     </ul>
 </nav>
 <main>
-    <a href="index.php" class="back-link">← Back</a>
     <div class="card" style="max-width:400px;margin:2rem auto">
         <div class="card-title">Admin Page</div>
         <p>Placeholder</p>
