@@ -27,14 +27,23 @@ if (!$_SESSION['admin_logged_in']) {
     <div class="card" style="max-width:400px;margin:2rem auto">
         <div class="card-title">Admin Page</div>
         <p>Welcome, Admin!</p>
-        <p>What would you like to do today?</p>
-        
-            <a class="btn" href="add_player.php">Add Player</a><br>
-            <a class="btn" href="delete_player.php">Delete Player</a><br>        
-        <form action="logout_admin.php" method="post">
-            <button type="submit" class="btn">Logout</button>
+        <p>Add a new player to the database.</p>
+        <p>Fill in the username, level, server.</p>
+        <form action="add_player_process.php" method="post">
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <br><br>
+            <label for="level">Level:</label>
+            <input type="text" id="level" name="level" required>
+            <br><br>
+            <label for="server">Server:</label>
+            <input type="text" id="server" name="server" required>
+            <br><br>
+
+            <button type="submit" class="btn">Add Player</button>
         </form>
-    </div>
+</div>  
 </main>
 </body>
 </html>

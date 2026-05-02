@@ -94,7 +94,8 @@ $conn->close();
                 <div class="meta">
                     Level <?= $player['level'] ?> &nbsp;·&nbsp;
                     <?= htmlspecialchars($player['server']) ?> Server &nbsp;·&nbsp;
-                    Joined <?= date('M j, Y', strtotime($player['creation_date'])) ?>
+                    Joined <?= date('M j, Y', strtotime($player['creation_date'])) ?> &nbsp;·&nbsp;
+                    ID <?= $player['player_id'] ?>
                 </div>
             </div>
         </div>

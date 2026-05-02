@@ -5,7 +5,19 @@ if (!$_SESSION['admin_logged_in']) {
     header('Location: login_admin.php');
     exit;
 }
+
+# get form data
+$player_id = $_POST['player_id'];
+
+# delete from database
+$sql = "DELETE FROM PLAYERS WHERE PLAYER_ID = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('i', $player_id);
+$stmt->execute();
+
+$stmt->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,15 +37,10 @@ if (!$_SESSION['admin_logged_in']) {
 </nav>
 <main>
     <div class="card" style="max-width:400px;margin:2rem auto">
-        <div class="card-title">Admin Page</div>
-        <p>Welcome, Admin!</p>
-        <p>What would you like to do today?</p>
-        
-            <a class="btn" href="add_player.php">Add Player</a><br>
-            <a class="btn" href="delete_player.php">Delete Player</a><br>        
-        <form action="logout_admin.php" method="post">
-            <button type="submit" class="btn">Logout</button>
-        </form>
+        <div class="card-title">Player Removed</div>
+        <p>Player <strong><?php echo htmlspecialchars($player_id); ?></strong> has been removed successfully!</p>
+        <p>Player ID: <strong><?php echo $player_id; ?></strong></p>
+        <p><a href="remove_player.php">Remove another player</a></p>
     </div>
 </main>
 </body>
