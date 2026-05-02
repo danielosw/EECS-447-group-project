@@ -89,6 +89,7 @@ $players = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 </nav>
 
 <main>
+    <h1>Ranked Players</h1>
     <div class="tabs">
         <a href="leaderboard.php" class="tab active">Players</a>
         <a href="char_leaderboard.php" class="tab">Characters</a>

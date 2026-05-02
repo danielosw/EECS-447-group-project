@@ -28,7 +28,7 @@ if (isset($_POST['password']) && $_POST['password'] === 'admin123')
     <ul class="nav-links">
         <li><a href="index.php">Home</a></li>
         <li><a href="leaderboard.php">Leaderboard</a></li>
-        <li><a href="admin.php">Admin</a></li>
+        <li><a href="admin.php" class="active">Admin</a></li>
     </ul>
 </nav>
 <main>

@@ -53,7 +53,7 @@ $characters = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderboard - Characters</title>
+    <title>Leaderboard - Ranked Characters</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -68,6 +68,7 @@ $characters = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 </nav>
 
 <main>
+    <h1>Ranked Characters</h1>
     <div class="tabs">
         <a href="leaderboard.php" class="tab">Players</a>
         <a href="char_leaderboard.php" class="tab active">Characters</a>
