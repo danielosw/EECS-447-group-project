@@ -1,7 +1,7 @@
 <?php
 require 'db_connect.php';
 
-$username = trim($_POST['username'] ?? '');
+$username = trim($_GET['username'] ?? '');
 if (!$username) { header('Location: index.php'); exit; }
 
 $stmt = $conn->prepare("SELECT * FROM PLAYERS WHERE username = ?");
@@ -77,7 +77,7 @@ $conn->close();
     </ul>
 </nav>
 <main>
-    <a href="index.php" class="back-link">← Back</a>
+    <a href="javascript:history.back()" class="back-link">← Back</a>
 
     <?php if ($player === null): ?>
         <div class="empty-state">
@@ -141,7 +141,7 @@ $conn->close();
                     <?php foreach ($top_chars as $c): ?>
                     <tr>
                         <td>
-                            <form action="char_profile.php" method="post" style="display:inline">
+                            <form action="char_profile.php" method="get" style="display:inline">
                                 <input type="hidden" name="charname" value="<?= htmlspecialchars($c['name']) ?>">
                                 <button type="submit" class="link-btn link-btn-accent"><?= htmlspecialchars($c['name']) ?></button>
                             </form>
@@ -172,7 +172,7 @@ $conn->close();
                     <tr>
                         <td><span class="badge badge-<?= strtolower($m['win_loss']) ?>"><?= $m['win_loss'] ?></span></td>
                         <td>
-                            <form action="char_profile.php" method="post" style="display:inline">
+                            <form action="char_profile.php" method="get" style="display:inline">
                                 <input type="hidden" name="charname" value="<?= htmlspecialchars($m['char_name']) ?>">
                                 <button type="submit" class="link-btn link-btn-plain"><?= htmlspecialchars($m['char_name']) ?></button>
                             </form>

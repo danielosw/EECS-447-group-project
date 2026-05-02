@@ -1,7 +1,7 @@
 <?php
 require 'db_connect.php';
 
-$char_name = trim($_POST['charname'] ?? '');
+$char_name = trim($_GET['charname'] ?? '');
 if (!$char_name) { header('Location: index.php'); exit; }
 
 $stmt = $conn->prepare("SELECT * FROM CHARACTERS WHERE name = ?");
@@ -65,7 +65,7 @@ $conn->close();
     </ul>
 </nav>
 <main>
-    <a href="index.php" class="back-link">← Back</a>
+    <a href="javascript:history.back()" class="back-link">← Back</a>
 
     <?php if ($character === null): ?>
         <div class="empty-state">
@@ -135,7 +135,7 @@ $conn->close();
                     <tr>
                         <td><span class="badge badge-<?= strtolower($m['win_loss']) ?>"><?= $m['win_loss'] ?></span></td>
                         <td>
-                            <form action="player_profile.php" method="post" style="display:inline">
+                            <form action="player_profile.php" method="get" style="display:inline">
                                 <input type="hidden" name="username" value="<?= htmlspecialchars($m['username']) ?>">
                                 <button type="submit" class="link-btn link-btn-accent"><?= htmlspecialchars($m['username']) ?></button>
                             </form>

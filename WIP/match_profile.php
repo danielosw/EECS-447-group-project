@@ -99,13 +99,13 @@ $conn->close();
                     <tr>
                         <td><span class="badge badge-<?= strtolower($s['win_loss']) ?>"><?= $s['win_loss'] ?></span></td>
                         <td>
-                            <form action="player_profile.php" method="post" style="display:inline">
+                            <form action="player_profile.php" method="get" style="display:inline">
                                 <input type="hidden" name="username" value="<?= htmlspecialchars($s['username']) ?>">
                                 <button type="submit" class="link-btn link-btn-accent"><?= htmlspecialchars($s['username']) ?></button>
                             </form>
                         </td>
                         <td>
-                            <form action="char_profile.php" method="post" style="display:inline">
+                            <form action="char_profile.php" method="get" style="display:inline">
                                 <input type="hidden" name="charname" value="<?= htmlspecialchars($s['char_name']) ?>">
                                 <button type="submit" class="link-btn link-btn-plain"><?= htmlspecialchars($s['char_name']) ?></button>
                             </form>

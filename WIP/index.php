@@ -1,7 +1,7 @@
 <?php
 require 'db_connect.php';
-$players    = $conn->query("SELECT player_id, username, level, server FROM PLAYERS ORDER BY level DESC")->fetch_all(MYSQLI_ASSOC);
-$characters = $conn->query("SELECT character_id, name, role, difficulty FROM CHARACTERS ORDER BY name")->fetch_all(MYSQLI_ASSOC);
+$players    = $conn->query("SELECT player_id, username, level, server FROM PLAYERS ORDER BY level DESC LIMIT 5")->fetch_all(MYSQLI_ASSOC);
+$characters = $conn->query("SELECT character_id, name, role, difficulty FROM CHARACTERS LIMIT 5")->fetch_all(MYSQLI_ASSOC);
 $conn->close();
 ?>
 <!DOCTYPE html>
@@ -30,7 +30,7 @@ $conn->close();
         <div class="search-grid">
             <div class="search-card">
                 <h2>Search Player</h2>
-                <form class="search-form" action="player_profile.php" method="post">
+                <form class="search-form" action="player_profile.php" method="get">
                     <input type="text" name="username" placeholder="Enter username…" list="player_list" autocomplete="off" required>
                     <datalist id="player_list">
                         <?php foreach ($players as $p): ?>
@@ -43,7 +43,7 @@ $conn->close();
 
             <div class="search-card">
                 <h2>Search Character</h2>
-                <form class="search-form" action="char_profile.php" method="post">
+                <form class="search-form" action="char_profile.php" method="get">
                     <input type="text" name="charname" placeholder="Enter character…" list="char_list" autocomplete="off" required>
                     <datalist id="char_list">
                         <?php foreach ($characters as $c): ?>
@@ -62,7 +62,7 @@ $conn->close();
             <?php foreach ($players as $p): ?>
             <div class="list-row">
                 <div>
-                    <form id="pf<?= $p['player_id'] ?>" action="player_profile.php" method="post" style="display:inline">
+                    <form id="pf<?= $p['player_id'] ?>" action="player_profile.php" method="get" style="display:inline">
                         <input type="hidden" name="username" value="<?= htmlspecialchars($p['username']) ?>">
                         <button type="submit" class="link-btn link-btn-accent"><?= htmlspecialchars($p['username']) ?></button>
                     </form>
@@ -78,7 +78,7 @@ $conn->close();
             <?php foreach ($characters as $c): ?>
             <div class="list-row">
                 <div>
-                    <form action="char_profile.php" method="post" style="display:inline">
+                    <form action="char_profile.php" method="get" style="display:inline">
                         <input type="hidden" name="charname" value="<?= htmlspecialchars($c['name']) ?>">
                         <button type="submit" class="link-btn link-btn-accent"><?= htmlspecialchars($c['name']) ?></button>
                     </form>

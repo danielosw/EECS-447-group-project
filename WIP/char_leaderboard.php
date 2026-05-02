@@ -1,13 +1,35 @@
 <?php
 require 'db_connect.php';
 
-$rank = 1;
 $sort = $_GET['sort'] ?? 'winrate';
 $order = match($sort) {
     'winrate' => 'winrate DESC',
     'plays' => 'total DESC',
     default => 'winrate DESC'
 };
+
+$page = max(1, (int)($_GET['page'] ?? 1));
+$per_page = 10;
+$offset = (($page - 1) * $per_page);
+$rank = $offset + 1;
+
+$count_stmt = $conn->prepare(
+    "SELECT COUNT(*) AS total
+    FROM (
+    SELECT C.character_id
+    FROM MATCH_STATS MS
+    JOIN CHARACTERS C ON MS.character_id = C.character_id
+    JOIN MATCHES M ON MS.match_id = M.match_id
+    WHERE game_mode = 'Ranked'
+    GROUP BY C.character_id) AS sq
+");
+$count_stmt->execute();
+$total_characters = $count_stmt->get_result()->fetch_assoc()['total'];
+$total_pages = ceil($total_characters / $per_page);
+$has_next = $page < $total_pages;
+
+$types = "ii";
+$params = [$per_page, $offset];
 
 $stmt = $conn->prepare(
     "SELECT C.name, role,
@@ -18,7 +40,9 @@ $stmt = $conn->prepare(
     JOIN MATCHES M ON MS.match_id = M.match_id
     WHERE game_mode = 'Ranked'
     GROUP BY C.character_id ORDER BY $order
+    LIMIT ? OFFSET ?
 ");
+$stmt->bind_param($types, ...$params);
 $stmt->execute();
 $characters = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
@@ -49,15 +73,17 @@ $characters = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         <a href="char_leaderboard.php" class="tab active">Characters</a>
     </div>
 
-    <form method="get" style="margin-bottom:1rem">
-        <select name="sort" onchange="this.form.submit()">
-            <option value="winrate" <?= $sort === 'winrate' ? 'selected' : '' ?>>Win Rate</option>
-            <option value="plays" <?= $sort === 'plays' ? 'selected' : '' ?>>Plays</option>
-        </select>
+    <form method="get" class="form-grid">
+        <div class="form-group">
+            <select name="sort" onchange="this.form.submit()">
+                <option value="winrate" <?= $sort === 'winrate' ? 'selected' : '' ?>>Win Rate</option>
+                <option value="plays" <?= $sort === 'plays' ? 'selected' : '' ?>>Plays</option>
+            </select>
+        </div>
     </form>
 
     <div class="card">
-        <div class="card-title">Characters</div>
+        <div class="card-title">Ranked Matches</div>
         <?php if (!$characters): ?>
             <div class="empty-state" style="padding:2rem">No characters found.</div>
         <?php else: ?>
@@ -73,7 +99,7 @@ $characters = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                         <tr>
                             <td><?= $rank ?><?php $rank++; ?></td>
                             <td>
-                                <form action="char_profile.php" method="post" style="display:inline">
+                                <form action="char_profile.php" method="get" style="display:inline">
                                     <input type="hidden" name="charname" value="<?= htmlspecialchars($c['name']) ?>">
                                     <button type="submit" class="link-btn link-btn-accent"><?= htmlspecialchars($c['name']) ?></button>
                                 </form>
@@ -86,6 +112,25 @@ $characters = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                 </tbody>
             </table>
         </div>
+
+        <div class="pagination">
+            <div>
+                <?php if ($page > 1): ?>
+                    <a class="btn btn-ghost" href="?page=<?= $page - 1 ?>&sort=<?= $sort ?>">← Prev</a>
+                <?php endif; ?>
+            </div>
+
+            <div class="pagination-center">
+                Page <?= $page ?>
+            </div>
+
+            <div>
+                <?php if ($has_next): ?>
+                    <a class="btn" href="?page=<?= $page + 1 ?>&sort=<?= $sort ?>">Next →</a>
+                <?php endif; ?>
+            </div>
+        </div>
+
         <?php endif; ?>
     </div>
 </main>

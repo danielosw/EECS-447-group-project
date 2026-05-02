@@ -32,8 +32,6 @@ if (isset($_POST['password']) && $_POST['password'] === 'admin123')
     </ul>
 </nav>
 <main>
-    <a href="index.php" class="back-link">← Back</a>
-
     <div class="card" style="max-width:400px;margin:2rem auto">
         <div class="card-title">Admin Login</div>
         <form action="login_admin.php" method="post" class="admin-login-form">
