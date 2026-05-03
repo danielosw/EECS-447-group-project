@@ -31,6 +31,7 @@ if (!$_SESSION['admin_logged_in']) {
         
             <a class="btn" href="add_player.php">Add Player</a><br>
             <a class="btn" href="delete_player.php">Delete Player</a><br>        
+            <a class="btn" href="update_character.php">Update Character</a><br>
         <form action="logout_admin.php" method="post">
             <button type="submit" class="btn">Logout</button>
         </form>
