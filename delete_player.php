@@ -29,7 +29,7 @@ if (!$_SESSION['admin_logged_in']) {
         <p>Welcome, Admin!</p>
         <p>Remove a player from the database.</p>
         <p>Fill in the player ID.</p>
-        <form action="remove_player_process.php" method="post">
+        <form action="delete_player_process.php" method="post">
 
             <label for="player_id">Player ID:</label>
             <input type="text" id="player_id" name="player_id" required>
